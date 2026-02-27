@@ -1,0 +1,61 @@
+
+@font-face {
+  font-family: 'TitleFont';
+  src: url('../../public/fonts/HYXingHeJianDui-95U.ttf');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+@font-face {
+  font-family: 'ContenFont';
+  src: url('../../public/fonts/HYYuanLongHei45W.ttf');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.sigmar-ff {
+  /* font-family: "Sigmar", sans-serif; */
+  font-family: "TitleFont", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.kanit-light {
+  /* font-family: "Kanit", sans-serif; */
+  font-weight: 300;
+  font-style: normal;
+}
+
+.kanit-light-italic {
+  /* font-family: "Kanit", sans-serif; */
+  font-weight: 300;
+  font-style: italic;
+}
+
+.kanit-regular {
+  /* font-family: "Kanit", sans-serif; */
+  font-weight: 400;
+  font-style: normal;
+}
+
+.kanit-regular-italic {
+  /* font-family: "Kanit", sans-serif; */
+  font-weight: 400;
+  font-style: italic;
+}
+
+.kanit-bold {
+  /* font-family: "Kanit", sans-serif; */
+  font-weight: 700;
+  font-style: normal;
+}
+
+.kanit-bold-italic {
+  /* font-family: "Kanit", sans-serif; */
+  font-weight: 700;
+  font-style: italic;
+}
