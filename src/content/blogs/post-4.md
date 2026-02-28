@@ -3,7 +3,7 @@ title: "May the Fourth be with you"
 author: "Astro-naut Sid"
 description: "This post will show up on its own!"
 image:
-  url: "../../assets/images/1.png"
+  url: "../../assets/images/1.jpg"
   alt: "The word astro against an illustration of planets and stars."
 pubDate: 2024-02-07
 tags:
