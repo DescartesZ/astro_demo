@@ -1,18 +1,43 @@
 import { type CollectionEntry } from "astro:content";
 
+/**
+ * 字符串转Ascci码值对应十六进制字符
+ * @param {Object} content
+ * @param {Object} bit
+ */
+export function strToHex(content: string): number {
+  try {
+    let result = 0;
+    for (let i = 0; i < content.length; i++) {
+      // 使用 charCodeAt 获取字符的 Unicode 码点，这能正确处理中文字符
+      const charCode = content.charCodeAt(i);
+      // 使用更稳定的哈希算法，防止溢出
+      result = (result << 5) - result + charCode;
+      // 将结果转换为32位无符号整数
+      result = result & 0xffffffff;
+    }
+
+    // 确保返回正数
+    return result >>> 0; // 无符号右移，确保为正数
+  } catch (error) {
+    console.log("报错Error:", error);
+    return 0;
+  }
+}
+
 export function createSlugFromTitle(title: string): string {
-  return title
-    .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, "") // Remove special characters
+  let slug = title
     .trim()
     .replace(/\s+/g, "-") // Replace spaces with hyphens
     .replace(/-+/g, "-"); // Replace multiple hyphens with a single hyphen
+  return strToHex(slug);
 }
 
 export function getAllTags(posts: CollectionEntry<"blogs">[]) {
   const tags: string[] = [
     ...new Set(posts.flatMap((post) => post.data.tags || []).filter(Boolean)),
   ];
+
   return tags
     .map((tag) => {
       return {

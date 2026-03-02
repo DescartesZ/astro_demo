@@ -6,16 +6,18 @@ import { withBase } from '../utils/helpers';
 
 type Props = { post: CollectionEntry<'blogs'> };
 const { post } = Astro.props;
-const { title, pubDate, description, image } = post.data;
+const { title, pubDate, description, image, tags } = post.data;
 ---
 
 <a class="font-bold" href={withBase('/blog/' + post.id)}>
   <div class="flex flex-col sm:flex-row gap-2 sm:gap-4">
     {
-      image && image.url && (
-        <>
-          <Image class="" src={image.url} alt={image.alt || ''} width={300} height={167} />
-        </>
+      image && image.url ? (
+        <Image class="img-card" src={image.url} alt={image.alt || ''} />
+      ) : (
+        <div class="tag-card border border-space-blue dark:border-space-yellow img-card flex items-center justify-center">
+          {tags && tags.length > 0 ? tags[0] : ''}
+        </div>
       )
     }
     <div class="flex flex-col max-w-fit">
@@ -25,3 +27,16 @@ const { title, pubDate, description, image } = post.data;
     </div>
   </div>
 </a>
+
+<style>
+  .img-card {
+    width: 300px;
+    height: 167px;
+  }
+
+  .tag-card {
+    border-radius: 12px;
+    font-size: 48px;
+    font-family: 'TitleFont', Arial, sans-serif;
+  }
+</style>

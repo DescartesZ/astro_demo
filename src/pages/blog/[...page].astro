@@ -8,11 +8,13 @@ import siteConfig from '../../site.config';
 import PostCardPreview from '../../components/PostCardPreview.astro';
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
-  const blogs = (await getCollection('blogs')).sort(sortItemsByDateDesc);
-  return paginate(blogs, { pageSize: siteConfig.postsPerPage || 2 });
+  const blogsPost = (await getCollection('blogs')).sort(sortItemsByDateDesc);
+  const totalPosts = blogsPost;
+
+  return paginate(totalPosts, { pageSize: siteConfig.postsPerPage || 2 });
 }
 
-type Props = { page: Page<CollectionEntry<'blogs'>> };
+type Props = { page: Page<CollectionEntry<'totalPosts'>> };
 
 const { page } = Astro.props;
 const allPosts = page.data;
