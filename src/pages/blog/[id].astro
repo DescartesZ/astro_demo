@@ -1,20 +1,16 @@
 ---
-import "../../styles/global.css";
-import { Image } from "astro:assets";
-import {
-  sortItemsByDateDesc,
-  createSlugFromTitle,
-  withBase,
-} from "../../utils/helpers";
-import { type CollectionEntry, getCollection, render } from "astro:content";
-import Button from "../../components/Button.astro";
-import MainLayout from "../../layouts/MainLayout.astro";
-import ArrowLeft from "../../icons/ArrowLeft.astro";
-import ArrowRight from "../../icons/ArrowRight.astro";
-import siteConfig from "../../site.config";
+import '../../styles/global.css';
+import { Image } from 'astro:assets';
+import { sortItemsByDateDesc, createSlugFromTitle, withBase } from '../../utils/helpers';
+import { type CollectionEntry, getCollection, render } from 'astro:content';
+import Button from '../../components/Button.astro';
+import MainLayout from '../../layouts/MainLayout.astro';
+import ArrowLeft from '../../icons/ArrowLeft.astro';
+import ArrowRight from '../../icons/ArrowRight.astro';
+import siteConfig from '../../site.config';
 
 export async function getStaticPaths() {
-  const posts = (await getCollection("blogs")).sort(sortItemsByDateDesc);
+  const posts = (await getCollection('blogs')).sort(sortItemsByDateDesc);
   const postCount = posts.length;
   return posts.map((post, index) => ({
     params: { id: post.id },
@@ -27,9 +23,9 @@ export async function getStaticPaths() {
 }
 
 type Props = {
-  post: CollectionEntry<"blogs">;
-  prevPost: CollectionEntry<"blogs">;
-  nextPost: CollectionEntry<"blogs">;
+  post: CollectionEntry<'blogs'>;
+  prevPost: CollectionEntry<'blogs'>;
+  nextPost: CollectionEntry<'blogs'>;
 };
 
 const { post, prevPost, nextPost } = Astro.props;
@@ -37,7 +33,7 @@ const { title, pubDate, author, tags = [], image } = post.data;
 const { Content } = await render(post);
 ---
 
-<MainLayout pageTitle={siteConfig.title + " | " + title}>
+<MainLayout pageTitle={siteConfig.title + ' | ' + title}>
   <div class="page-content">
     <h1 class="sigmar-ff text-center text-balance">{title}</h1>
     <p class="leading-8 text-center kanit-regular text-balance text-xs">
@@ -45,40 +41,28 @@ const { Content } = await render(post);
         >{new Date(pubDate).toDateString()}</span
       >
     </p>
-    {
-      image && image.url && (
-        <Image class="mb-8 my-6" src={image?.url} alt={image?.alt || ""} />
-      )
-    }
+    {image && image.url && <Image class="mb-8 my-6" src={image?.url} alt={image?.alt || ''} />}
     <div class="font-light text-left">
       <Content />
     </div>
     <p class="kanit-regular text-center text-balance text-xs">
-      Tagged: {
+      标签:
+      {
         tags.map((tag) => (
-          <Button
-            class="px-4! m-2"
-            href={withBase("/tags/" + createSlugFromTitle(tag))}
-          >
+          <Button class="px-4! m-2" href={withBase('/tags/' + createSlugFromTitle(tag))}>
             {tag}
           </Button>
         ))
       }
     </p>
-    <div
-      class="flex flex-col sm:flex-row items-center justify-center gap-4 my-8"
-    >
-      <Button class="back-link" href={withBase("/blog")}>
-        <ArrowLeft class="w-5 h-5 fill-current mr-4" /> Back to All Stories
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 my-8">
+      <Button class="back-link" href={withBase('/blog')}>
+        <ArrowLeft class="w-5 h-5 fill-current mr-4" /> 返回查看所有文章
       </Button>
       {
         (prevPost || nextPost) && nextPost && (
-          <Button
-            class="back-link text-balance"
-            href={withBase("/blog/" + nextPost.id)}
-          >
-            Next Post: {nextPost.data.title}{" "}
-            <ArrowRight class="w-5 h-5 fill-current ml-4" />
+          <Button class="back-link text-balance" href={withBase('/blog/' + nextPost.id)}>
+            上一篇: {nextPost.data.title} <ArrowRight class="w-5 h-5 fill-current ml-4" />
           </Button>
         )
       }

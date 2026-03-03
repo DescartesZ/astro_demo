@@ -132,7 +132,7 @@ const siteConfig: SiteConfig = {
   hero: {
     eyebrowText: "无限探索",
     title: "无垠空间✨",
-    text: "不积硅步，无以至千里。不积小流，无以成江海。终有一天, 你将进入新的无垠空间。",
+    text: "保持热爱，无限探索，聚沙成塔。你走过的每一步都会向更高、更远、更无垠的空间前进。",
     image: {
       src: "/assets/images/pixeltrue-space-discovery.svg",
       alt: "A person sitting at a desk in front of a computer",
@@ -156,7 +156,7 @@ const siteConfig: SiteConfig = {
     title: "联系我",
     text: "您好！无论您对我、对博客、对博文有任何问题、建议，还是想分享您的想法，我都乐意倾听。",
     promote:
-      "另外，如果您有web系统开发或者App、微信小程序等需求需要寻求合作,也欢迎联系我深入合作。请随时通过以下任何方式联系我：",
+      "另外，如果您有web系统开发或者App、微信小程序等需求需要寻求合作，也欢迎联系我深入合作。请随时通过以下任何方式联系我：",
     email: {
       text: "这是我的电子邮件，我会尽快回复:",
       href: "mailto:zhouzhihuis@qq.com",
