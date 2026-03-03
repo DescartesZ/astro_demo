@@ -50,7 +50,7 @@ export function getAllTags(posts: CollectionEntry<"blogs">[]) {
     });
 }
 
-export const withBase = (path: string) => `${import.meta.env.BASE_URL}${path}`;
+export const withBase = (path: string) => path;
 /**
  * 根据标签ID获取匹配的文章列表
  *
