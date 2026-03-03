@@ -68,12 +68,12 @@ export type SiteConfig = {
 };
 
 const siteConfig: SiteConfig = {
-  website: "https://example.com",
+  website: "https://descartesdemo.netlify.app",
   title: "DescartesZ",
-  description: "一个使用 Astro.js 和 Tailwind CSS 构建的极简太空风格个人博客",
+  description: "一个记录个人学习、思考、分享的博客",
   image: {
     src: "/space-ahead-preview.jpeg",
-    alt: "极简太空风格个人博客",
+    alt: "个人博客图",
   },
   headerNavLinks: [
     {
@@ -117,22 +117,22 @@ const siteConfig: SiteConfig = {
   ],
   socialLinks: [
     {
-      text: "Dribbble",
-      href: "https://dribbble.com/",
+      text: "Github",
+      href: "https://github.com/DescartesZ",
     },
     {
-      text: "Instagram",
-      href: "https://instagram.com/",
+      text: "Gitee",
+      href: "https://gitee.com/plan-001/projects",
     },
     {
-      text: "X/Twitter",
-      href: "https://twitter.com/",
+      text: "CSDN",
+      href: "https://blog.csdn.net/qq_45020145?type=blog",
     },
   ],
   hero: {
     eyebrowText: "无限探索",
     title: "无垠空间✨",
-    text: "Written by Astro-naut Sid, a space explorer at Beyond Earth.",
+    text: "不积硅步，无以至千里。不积小流，无以成江海。终有一天, 你将进入新的无垠空间。",
     image: {
       src: "/assets/images/pixeltrue-space-discovery.svg",
       alt: "A person sitting at a desk in front of a computer",
@@ -142,23 +142,25 @@ const siteConfig: SiteConfig = {
         text: "立即阅读",
         href: withBase("/blog"),
       },
-      {
-        text: "Subscribe",
-        href: "#subscribe",
-      },
+      // {
+      //   text: "Subscribe",
+      //   href: "#subscribe",
+      // },
     ],
   },
   about: {
-    title: "About",
-    text: "Space Ahead is a blog about space exploration and travel. It is written by Astro-naut Sid, a space explorer at Beyond Earth. Sid is known for his love of adventure and his insatiable curiosity about the universe. He has explored countless planets, discovered new life forms, and made friends with aliens along the way. 🚀",
+    title: "关于",
+    text: "这个博客当前尚处开发阶段，我还无法定义这个博客的用途，目前主要是用来整理一些过去的积累，以及一些学习笔记。等到合适的时候，会再给这个博客一个属于它的定义。",
   },
   contactInfo: {
-    title: "Contact",
-    text: "Hi! Whether you have a question, a suggestion, or just want to share your thoughts, I'm all ears. Feel free to get in touch through any of the methods below:",
+    title: "联系我",
+    text: "您好！无论您对我、对博客、对博文有任何问题、建议，还是想分享您的想法，我都乐意倾听。",
+    promote:
+      "另外，如果您有web系统开发或者App、微信小程序等需求需要寻求合作,也欢迎联系我深入合作。请随时通过以下任何方式联系我：",
     email: {
-      text: "Drop me an email and I’ll do my best to respond as soon as possible.",
-      href: "mailto:example@example.com",
-      email: "example@example.com",
+      text: "这是我的电子邮件，我会尽快回复:",
+      href: "mailto:zhouzhihuis@qq.com",
+      email: "zhouzhihuis@qq.com",
     },
     socialProfiles: [
       {
@@ -175,14 +177,14 @@ const siteConfig: SiteConfig = {
       },
     ],
   },
-  subscribe: {
-    title: "Subscribe to Space Ahead",
-    text: "One update per week. All the latest stories in your inbox.",
-    formUrl: "#",
-  },
+  // 订阅模块
+  // subscribe: {
+  //   title: "Subscribe to Space Ahead",
+  //   text: "One update per week. All the latest stories in your inbox.",
+  //   formUrl: "#",
+  // },
   blog: {
-    description:
-      "Read about my space adventures, explorations and the aliens I've met on my journeys.",
+    description: "无限探索 无限进步",
   },
   postsPerPage: 5,
   recentPostLimit: 3,

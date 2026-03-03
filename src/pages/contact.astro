@@ -1,11 +1,11 @@
 ---
-import { Image } from "astro:assets";
-import MainLayout from "../layouts/MainLayout.astro";
-import siteConfig from "../site.config";
-import coverImage from "../assets/images/pixeltrue-space-discovery.svg";
+import { Image } from 'astro:assets';
+import MainLayout from '../layouts/MainLayout.astro';
+import siteConfig from '../site.config';
+import coverImage from '../assets/images/astronaut-4.png';
 ---
 
-<MainLayout activePage="contact" pageTitle={siteConfig.title + " | Contact"}>
+<MainLayout activePage="contact" pageTitle={siteConfig.title + ' | Contact'}>
   <div class="page-content">
     <h1 class="sigmar-ff text-balance">{siteConfig.contactInfo?.title}</h1>
     <Image
@@ -18,28 +18,19 @@ import coverImage from "../assets/images/pixeltrue-space-discovery.svg";
       alt="Space envelop"
     />
     <div class="flex flex-col">
-      <!-- <Image width={1024} height={600} loading="eager" layout="constrained" class="rounded-4xl mb-8 mx-auto" src={coverImage} alt="An Astronaut walking on a terrain"/> -->
-      <p class="font-light text-left text-balance">
-        {siteConfig.contactInfo?.text}
+      <p class="font-light text-left">
+        {siteConfig.contactInfo?.text}<br />
+        {siteConfig.contactInfo?.promote}
       </p>
       <p class="font-light text-left">
         {siteConfig.contactInfo?.email?.text}<br />
-        <a
-          href={siteConfig.contactInfo?.email?.href}
-          class="font-light text-left"
-        >
+        <a href={siteConfig.contactInfo?.email?.href} class="font-light text-left">
           {siteConfig.contactInfo?.email?.email}
         </a>
       </p>
-      <p class="font-bold text-left flex flex-col sm:flex-row">
-        Social Profiles:
-        {
-          siteConfig.contactInfo?.socialProfiles?.map((profile) => (
-            <a href={profile.href} class="font-light text-left ml-4">
-              {profile.text}
-            </a>
-          ))
-        }
+      <p class="font-light text-left">
+        <!-- 其他联系方式: -->
+        微信: zzh1596481611 | QQ: 1596481611
       </p>
     </div>
   </div>

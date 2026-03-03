@@ -1,32 +1,19 @@
 ---
-import { Image } from "astro:assets";
-import MainLayout from "../layouts/MainLayout.astro";
-import { withBase } from "../utils/helpers";
-import heroImage from "../assets/images/pixeltrue-space-discovery.svg";
-import SpaceKeyboard from "../components/SpaceKeyboard.astro";
-import siteConfig from "../site.config";
+import { Image } from 'astro:assets';
+import MainLayout from '../layouts/MainLayout.astro';
+import { withBase } from '../utils/helpers';
+import heroImage from '../assets/images/astronaut-2.png';
+import SpaceKeyboard from '../components/SpaceKeyboard.astro';
+import siteConfig from '../site.config';
 ---
 
-<MainLayout
-  activePage="404"
-  pageTitle={siteConfig.title + " | 404"}
-  showSubscribeForm={false}
->
+<MainLayout activePage="404" pageTitle={siteConfig.title + ' | 404'} showSubscribeForm={false}>
   <div class="flex flex-col items-center justify-center page-content">
     <h1 class="sigmar-ff">404</h1>
-    <Image
-      class="cover-img"
-      src={heroImage}
-      alt={"Astronaut in space"}
-      width={400}
-      height={300}
-    />
-    <p>🧑‍🚀: Houston, we have a problem.</p>
+    <Image class="cover-img" src={heroImage} alt={'Astronaut in space'} width={400} height={300} />
+    <p>🧑‍🚀: 酒泉, 请重新建立联系!</p>
     <p>
-      We couldn't find that link. Verify the address or <a
-        class="font-medium underline"
-        href={withBase("/")}>Go Back Home</a
-      >
+      我们找不到该链接。请验证地址或 <a class="font-medium underline" href={withBase('/')}>返回首页</a>
     </p>
     <SpaceKeyboard />
   </div>
