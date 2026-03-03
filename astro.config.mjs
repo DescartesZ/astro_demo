@@ -7,8 +7,8 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://descartesz.github.io",
-  base: "/space-ahead",
+  site: "https://descartesdemo.netlify.app",
+  base: "/space-ahead/",
   integrations: [
     swup({
       theme: ["overlay", { direction: "to-top" }],
