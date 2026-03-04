@@ -1,10 +1,9 @@
 import rss from "@astrojs/rss";
-import { withBase } from "../utils/helpers";
-import { getCollection } from "astro:content";
+import { withBase, getCollectionWithNumericIds } from "../utils/helpers";
 import siteConfig from "../site.config";
 
 export async function GET(context) {
-  const blog = await getCollection("blogs");
+  const blog = await getCollectionWithNumericIds();
   return rss({
     title: siteConfig.title,
     description: siteConfig.description,
