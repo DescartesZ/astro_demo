@@ -1,4 +1,4 @@
-import { type CollectionEntry } from "astro:content";
+import { type CollectionEntry, getCollection } from "astro:content";
 
 /**
  * 字符串转Ascci码值对应十六进制字符
@@ -87,4 +87,34 @@ export function sortItemsByDateDesc(
     new Date(itemB.data.pubDate).getTime() -
     new Date(itemA.data.pubDate).getTime()
   );
+}
+
+/**
+ * 为博客文章生成基于标题的数字ID
+ * 替换原有的文件名ID，使URL更加美观
+ *
+ * @param post - 博客文章集合项
+ * @returns 返回包含新ID的文章对象
+ */
+export function generatePostId(
+  post: CollectionEntry<"blogs">,
+): CollectionEntry<"blogs"> {
+  // 增加blog标识，防止与其他集合冲突
+  const titleBasedId = createSlugFromTitle("Blog" + post.data.title);
+  return {
+    ...post,
+    id: titleBasedId.toString(),
+  };
+}
+
+/**
+ * 获取所有博客文章并生成基于标题的数字ID
+ *
+ * @returns 返回包含数字ID的博客文章数组
+ */
+export async function getCollectionWithNumericIds(): Promise<
+  CollectionEntry<"blogs">[]
+> {
+  const posts = await getCollection("blogs");
+  return posts.map(generatePostId);
 }

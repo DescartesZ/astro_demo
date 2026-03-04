@@ -1,14 +1,14 @@
 ---
 import type { GetStaticPathsOptions, Page } from 'astro';
-import { type CollectionEntry, getCollection } from 'astro:content';
+import { type CollectionEntry } from 'astro:content';
 import Pagination from '../../components/Pagination.astro';
-import { sortItemsByDateDesc } from '../../utils/helpers';
+import { sortItemsByDateDesc, getCollectionWithNumericIds } from '../../utils/helpers';
 import MainLayout from '../../layouts/MainLayout.astro';
 import siteConfig from '../../site.config';
 import PostCardPreview from '../../components/PostCardPreview.astro';
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
-  const blogsPost = (await getCollection('blogs')).sort(sortItemsByDateDesc);
+  const blogsPost = (await getCollectionWithNumericIds()).sort(sortItemsByDateDesc);
   const totalPosts = blogsPost;
 
   return paginate(totalPosts, { pageSize: siteConfig.postsPerPage || 2 });

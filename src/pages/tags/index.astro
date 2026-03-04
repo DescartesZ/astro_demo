@@ -1,11 +1,16 @@
 ---
-import { getAllTags, getPostsByTag, sortItemsByDateDesc, withBase } from '../../utils/helpers';
-import { getCollection } from 'astro:content';
+import {
+  getAllTags,
+  getPostsByTag,
+  sortItemsByDateDesc,
+  withBase,
+  getCollectionWithNumericIds,
+} from '../../utils/helpers';
 import Button from '../../components/Button.astro';
 import MainLayout from '../../layouts/MainLayout.astro';
 import siteConfig from '../../site.config';
 
-const posts = (await getCollection('blogs')).sort(sortItemsByDateDesc);
+const posts = (await getCollectionWithNumericIds()).sort(sortItemsByDateDesc);
 const tags = getAllTags(posts).sort((tagA, tagB) => {
   const postCountTagA = getPostsByTag(posts, tagA.id).length;
   const postCountTagB = getPostsByTag(posts, tagB.id).length;

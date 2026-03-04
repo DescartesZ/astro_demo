@@ -1,8 +1,8 @@
 ---
 import '../../styles/global.css';
 import { Image } from 'astro:assets';
-import { sortItemsByDateDesc, createSlugFromTitle, withBase } from '../../utils/helpers';
-import { type CollectionEntry, getCollection, render } from 'astro:content';
+import { sortItemsByDateDesc, createSlugFromTitle, withBase, getCollectionWithNumericIds } from '../../utils/helpers';
+import { type CollectionEntry, render } from 'astro:content';
 import Button from '../../components/Button.astro';
 import MainLayout from '../../layouts/MainLayout.astro';
 import ArrowLeft from '../../icons/ArrowLeft.astro';
@@ -10,7 +10,7 @@ import ArrowRight from '../../icons/ArrowRight.astro';
 import siteConfig from '../../site.config';
 
 export async function getStaticPaths() {
-  const posts = (await getCollection('blogs')).sort(sortItemsByDateDesc);
+  const posts = (await getCollectionWithNumericIds()).sort(sortItemsByDateDesc);
   const postCount = posts.length;
   return posts.map((post, index) => ({
     params: { id: post.id },
@@ -37,9 +37,9 @@ const { Content } = await render(post);
   <div class="page-content">
     <h1 class="sigmar-ff text-center text-balance">{title}</h1>
     <p class="leading-8 text-center kanit-regular text-balance text-xs">
-      by 🧑‍🚀 <span class="kanit-bold">{author}</span> on <span class="kanit-bold"
-        >{new Date(pubDate).toDateString()}</span
-      >
+      by 🧑‍🚀 <span class="kanit-bold">{author}</span> on <span class="kanit-bold">
+        {new Date(pubDate).toLocaleDateString()}
+      </span>
     </p>
     {image && image.url && <Image class="mb-8 my-6" src={image?.url} alt={image?.alt || ''} />}
     <div class="font-light text-left">

@@ -1,6 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
-import { getAllTags, getPostsByTag, sortItemsByDateDesc } from '../../../utils/helpers';
+import { getAllTags, getPostsByTag, sortItemsByDateDesc, getCollectionWithNumericIds } from '../../../utils/helpers';
 import type { GetStaticPathsOptions, Page } from 'astro';
 import siteConfig from '../../../site.config';
 import type { CollectionEntry } from 'astro:content';
@@ -10,7 +9,7 @@ import Subscribe from '../../../components/Subscribe.astro';
 import PostListPreview from '../../../components/PostListPreview.astro';
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
-  const posts = (await getCollection('blogs')).sort(sortItemsByDateDesc);
+  const posts = (await getCollectionWithNumericIds()).sort(sortItemsByDateDesc);
   const tags = getAllTags(posts);
 
   return tags.flatMap((tag) => {
@@ -27,8 +26,7 @@ type Props = { page: Page<CollectionEntry<'blogs'>> };
 const { page } = Astro.props;
 const blog = page.data;
 const params = Astro.params;
-const textPost = await getCollection('blogs');
-const allPosts = await getCollection('blogs');
+const allPosts = await getCollectionWithNumericIds();
 const allTags = getAllTags(allPosts);
 const currentTag = allTags.find((tag) => {
   return Number(tag.id) === Number(params.id);

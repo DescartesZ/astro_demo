@@ -112,7 +112,7 @@ const siteConfig: SiteConfig = {
     },
     {
       text: "站点地图",
-      href: withBase("/sitemap-index.xml"),
+      href: withBase("/sitemap"),
     },
   ],
   socialLinks: [
@@ -149,7 +149,7 @@ const siteConfig: SiteConfig = {
     ],
   },
   about: {
-    title: "关于",
+    title: "关于博客",
     text: "这个博客当前尚处开发阶段，我还无法定义这个博客的用途，目前主要是用来整理一些过去的积累，以及一些学习笔记。等到合适的时候，会再给这个博客一个属于它的定义。",
   },
   contactInfo: {
