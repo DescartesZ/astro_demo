@@ -13,22 +13,24 @@ const allPosts = (await getCollectionWithNumericIds()).sort(sortItemsByDateDesc)
 ---
 
 <MainLayout activePage="home" pageTitle={siteConfig.title + ' | 无垠空间'}>
-  <div class="jumbo-banner flex flex-col sm:flex-row sm:items-center sm:justify-between w-full px-4 my-12 gap-6">
-    <div class="w-full sm:w-fit sm:max-w-1/2">
+  <div
+    class="jumbo-banner flex flex-col lg:flex-row lg:items-center lg:justify-between w-full px-4 my-8 sm:my-12 gap-6"
+  >
+    <div class="w-full lg:w-1/2">
       {
         siteConfig.hero?.eyebrowText && (
-          <span class="tag rounded-full text-xs px-2 py-0 border border-gray-500 kanit-light">
+          <span class="tag rounded-full text-xs px-2 py-0 border border-gray-500 kanit-light mb-2 inline-block">
             {siteConfig.hero?.eyebrowText}
           </span>
         )
       }
-      <h1 class="sigmar-ff leading-tight text-balance sm:pt-0!">
+      <h1 class="sigmar-ff leading-tight text-balance text-2xl sm:text-4xl lg:text-6xl mb-4">
         {siteConfig.hero?.title}
       </h1>
-      <p class="kanit-regular text-balance text-xs sm:text-base">
+      <p class="kanit-regular text-balance text-sm sm:text-base lg:text-lg mb-6 sm:mb-8">
         {siteConfig.hero?.text}
       </p>
-      <div class="flex flex-wrap items-center text-xs sm:text-base gap-x-2 gap-y-8 mt-3 sm:mt-12">
+      <div class="flex flex-wrap items-center gap-3 sm:gap-4 mt-6">
         {
           siteConfig.hero?.actions?.map((action, index) => (
             <Button href={action.href} class={index === 0 ? 'space-btn-filled' : 'space-btn-outlined'}>
@@ -38,9 +40,14 @@ const allPosts = (await getCollectionWithNumericIds()).sort(sortItemsByDateDesc)
         }
       </div>
     </div>
-    <div class="w-full sm:w-fit sm:max-w-1/2">
-      <!-- {siteConfig.hero?.image && <Image src={siteConfig.hero?.image?.src} alt={siteConfig.hero?.image?.alt || ""} inferSize={true} />} -->
-      <Image class="cover-img" src={heroImage} alt={'Astronaut in space'} width={400} height={300} />
+    <div class="w-full lg:w-1/2 mt-8 lg:mt-0">
+      <Image
+        class="cover-img w-full h-auto max-w-md mx-auto lg:max-w-full"
+        src={heroImage}
+        alt={'Astronaut in space'}
+        width={400}
+        height={300}
+      />
     </div>
   </div>
   <div class="page-content">

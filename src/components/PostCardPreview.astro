@@ -9,34 +9,60 @@ const { post } = Astro.props;
 const { title, pubDate, description, image, tags } = post.data;
 ---
 
-<a class="font-bold" href={withBase('/blog/' + post.id)}>
-  <div class="flex flex-col sm:flex-row gap-2 sm:gap-4">
+<a class="font-bold block" href={withBase('/blog/' + post.id)}>
+  <div class="flex flex-col sm:flex-row gap-4 sm:gap-6">
     {
       image && image.url ? (
-        <Image class="img-card" src={image.url} alt={image.alt || ''} />
+        <Image
+          class="img-card w-full sm:w-80 h-48 sm:h-44 object-cover rounded-lg flex-shrink-0"
+          src={image.url}
+          alt={image.alt || ''}
+        />
       ) : (
-        <div class="tag-card border border-space-blue dark:border-space-yellow img-card flex items-center justify-center">
-          {tags && tags.length > 0 ? tags[0] : ''}
+        <div class="tag-card border border-space-blue dark:border-space-yellow img-card w-full sm:w-80 h-48 sm:h-44 flex items-center justify-center flex-shrink-0 rounded-lg overflow-hidden">
+          <span
+            class="tag-text whitespace-nowrap overflow-hidden text-ellipsis max-w-full px-4 text-center"
+            title={tags && tags.length > 0 ? tags[0] : ''}
+          >
+            {tags && tags.length > 0 ? tags[0] : ''}
+          </span>
         </div>
       )
     }
-    <div class="flex flex-col max-w-fit">
-      <h2 class="mb-1">{title}</h2>
+    <div class="flex flex-col flex-1 min-w-0">
+      <h2 class="mb-2 text-lg sm:text-xl leading-tight">{title}</h2>
       <FormattedDate date={new Date(pubDate)} />
-      {description && <p class="font-light text-base text-balance">{description}</p>}
+      {description && <p class="font-light text-sm sm:text-base text-balance mt-2 leading-relaxed">{description}</p>}
     </div>
   </div>
 </a>
 
 <style>
   .img-card {
-    width: 300px;
-    height: 167px;
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 16/9;
   }
 
   .tag-card {
     border-radius: 12px;
-    font-size: 48px;
+    font-size: clamp(24px, 8vw, 48px);
     font-family: 'TitleFont', Arial, sans-serif;
+    text-align: center;
+    position: relative;
+  }
+
+  .tag-text {
+    font-size: inherit;
+    font-weight: bold;
+    display: block;
+    line-height: 1.2;
+  }
+
+  @media (max-width: 640px) {
+    .img-card {
+      width: 100%;
+      height: 12rem;
+    }
   }
 </style>

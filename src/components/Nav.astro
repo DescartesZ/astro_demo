@@ -1,47 +1,43 @@
 ---
-import siteConfig, { type Link } from "../site.config";
-import Hamburger from "./Hamburger.astro";
-import ThemeSwitcher from "./ThemeSwitcher.astro";
-import SiteIdentity from "./SiteIdentity.astro";
-import NavLinks from "./NavLinks.astro";
-import { withBase } from "../utils/helpers";
+import siteConfig, { type Link } from '../site.config';
+import ThemeSwitcher from './ThemeSwitcher.astro';
+import SiteIdentity from './SiteIdentity.astro';
+import NavLinks from './NavLinks.astro';
+import { withBase } from '../utils/helpers';
 const { activePage } = Astro.props;
 ---
 
 <header>
   <nav class="font-light w-full">
-    <a href={withBase("/")}><SiteIdentity /></a>
+    <a href={withBase('/')}><SiteIdentity /></a>
     <div class="hidden sm:flex sm:gap-8">
       {(<NavLinks activePage={activePage} links={siteConfig.headerNavLinks} />)}
     </div>
     <ThemeSwitcher />
-    <Hamburger />
+    <span
+      id="mobile-menu"
+      class="relative block text-2xl leading-none sm:hidden cursor-pointer select-none hover:scale-110 transition-transform"
+      title="Menu">📒</span
+    >
   </nav>
-  <div
-    id="mobile-links"
-    class="font-light animated h-0 m-0 opacity-0 top-0 w-full"
-  >
-    <span class="close-menu">❌</span>
-    <NavLinks
-      activePage={activePage}
-      links={siteConfig.headerNavLinks}
-      isMobileLink={true}
-    />
+  <div id="mobile-links" class="font-light animated h-0 m-0 opacity-0 top-0 backdrop-blur-3xl">
+    <NavLinks activePage={activePage} links={siteConfig.headerNavLinks} isMobileLink={true} />
+    <div id="close-btn" class="close-menu backdrop-blur-3xl">🔺</div>
   </div>
 </header>
 <script is:inline>
-  document.querySelector("#hamburger-menu").addEventListener("click", () => {
-    console.log("clicked...");
-    document.querySelector("#mobile-links").classList.remove("slideOutUp");
-    document.querySelector("#mobile-links").classList.add("expanded");
-    document.querySelector("#mobile-links").classList.add("slideInDown");
+  document.querySelector('#mobile-menu').addEventListener('click', () => {
+    console.log('clicked...');
+    document.querySelector('#mobile-links').classList.remove('slideOutUp');
+    document.querySelector('#mobile-links').classList.add('expanded');
+    document.querySelector('#mobile-links').classList.add('slideInDown');
   });
 
-  document.querySelector(".close-menu").addEventListener("click", () => {
-    console.log("clicked...");
-    document.querySelector("#mobile-links").classList.add("slideOutUp");
-    document.querySelector("#mobile-links").classList.add("expanded");
-    document.querySelector("#mobile-links").classList.remove("slideInDown");
+  document.querySelector('#close-btn').addEventListener('click', () => {
+    console.log('clicked...');
+    document.querySelector('#mobile-links').classList.add('slideOutUp');
+    document.querySelector('#mobile-links').classList.add('expanded');
+    document.querySelector('#mobile-links').classList.remove('slideInDown');
   });
 </script>
 
@@ -49,8 +45,6 @@ const { activePage } = Astro.props;
   @media (orientation: portrait) {
     #mobile-links.expanded {
       align-items: end;
-      background-color: #0000007a;
-      backdrop-filter: blur(72px);
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
@@ -59,14 +53,27 @@ const { activePage } = Astro.props;
       z-index: 10;
       opacity: 1;
       padding: 1rem 2rem;
-      width: 100vw;
-      top: 0;
+      width: 90vw;
+      top: 46px;
       min-height: fit-content;
       border-bottom-left-radius: 0.5rem;
       border-bottom-right-radius: 0.5rem;
+      border: none;
+      box-shadow:
+        inset 0 0 0.5px 1px hsla(0, 0%, 100%, 0.075),
+        /* shadow ring 👇 */ 0 0 0 1px hsla(0, 0%, 0%, 0.05),
+        /* multiple soft shadows 👇 */ 0 0.3px 0.4px hsla(0, 0%, 0%, 0.02),
+        0 0.9px 1.5px hsla(0, 0%, 0%, 0.045),
+        0 3.5px 6px hsla(0, 0%, 0%, 0.09);
     }
     html.light #mobile-links.expanded {
-      background-color: #ffffff6a;
+      /* background-color: #ffffff6a; */
     }
+  }
+  .close-menu {
+    width: 100%;
+    text-align: center;
+    border: 1px solid #ffffff6a;
+    border-radius: 0.5rem;
   }
 </style>

@@ -309,26 +309,65 @@ const totalPages = siteStructure.reduce((total, section) => total + section.page
   }
 
   @media (max-width: 768px) {
+    .sitemap-container {
+      padding: 15px;
+    }
+
     .page-item {
       flex-direction: column;
       gap: 10px;
+      padding: 12px;
     }
 
     .page-url {
       margin-left: 0;
+      margin-top: 10px;
     }
 
     .page-meta {
       flex-direction: column;
       align-items: flex-start;
+      gap: 8px;
     }
 
     .info-links {
       flex-direction: column;
+      gap: 10px;
     }
 
     .sitemap-stats {
       grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+
+    .stat-card {
+      padding: 20px;
+    }
+
+    .stat-number {
+      font-size: 2em;
+    }
+
+    .section-title {
+      font-size: 1.3em;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .sitemap-stats {
+      grid-template-columns: 1fr;
+    }
+
+    .sitemap-container {
+      padding: 10px;
+    }
+
+    .sitemap-section {
+      padding: 20px;
+    }
+
+    .page-url code {
+      font-size: 0.75em;
     }
   }
 </style>

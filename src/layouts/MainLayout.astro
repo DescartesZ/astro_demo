@@ -38,7 +38,7 @@ const { pageTitle, activePage, showSubscribeForm = true } = Astro.props as Layou
     <title>{pageTitle}</title>
   </head>
   <body>
-    <main class="max-w-3xl mx-auto min-h-screen">
+    <main class="max-w-3xl mx-auto min-h-screen px-4 sm:px-6">
       <Nav activePage={activePage} />
       <slot />
       {showSubscribeForm && <Subscribe class="my-12 w-full" />}

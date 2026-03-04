@@ -4,37 +4,35 @@ import SiteIdentity from './SiteIdentity.astro';
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="kanit-light text-xs sm:text-sm">
+<footer class="kanit-light text-xs sm:text-sm px-4">
   <div class="footer-primary flex flex-col items-center justify-center min-w-full border-t border-gray-500/50">
-    <div
-      class="flex flex-row items-center justify-around sm:justify-center gap-2 sm:gap-6 pt-6 pb-3 sm:px-6 text-center"
-    >
+    <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-6 pt-6 pb-3 sm:px-6 text-center">
       {
         siteConfig.footerNavLinks?.map((link) => (
-          <a href={link.href} title={link.text}>
+          <a href={link.href} title={link.text} class="px-2 py-1">
             {link.text}
           </a>
         ))
       }
     </div>
   </div>
-  <div class="footer-secondary flex flex-col sm:flex-row items-center justify-between gap-6 min-w-full">
-    <div class="flex flex-row gap-2 items-center justify-start text-balance">
+  <div class="footer-secondary flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6 min-w-full py-4">
+    <div class="flex flex-row gap-2 items-center justify-center sm:justify-start text-balance text-center sm:text-left">
       <span>&copy; {currentYear}</span>
       {siteConfig.title}. All rights reserved.
     </div>
-    <div class="flex flex-row gap-4 items-center justify-end-safe">
+    <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
       {
         siteConfig.socialLinks?.map((link) => (
-          <a href={link.href} title={link.text} target="_blank">
+          <a href={link.href} title={link.text} target="_blank" class="px-2 py-1">
             {link.text}
           </a>
         ))
       }
     </div>
   </div>
-  <div class="footer-identity h-40 sm:h-18 text-center overflow-clip sticky bottom-0 items-end">
-    <span class="sigmar-ff text-8xl sm:text-[6.5rem] leading-none text-whitesmoke/50 dark:text-gray-300/30"
+  <div class="footer-identity h-20 sm:h-18 text-center overflow-clip sticky bottom-0 items-end">
+    <span class="sigmar-ff text-4xl sm:text-[6.5rem] leading-none text-whitesmoke/50 dark:text-gray-300/30"
       >{siteConfig.title}</span
     >
   </div>
