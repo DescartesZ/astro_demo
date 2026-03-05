@@ -4,7 +4,7 @@ description: "这是一个关于如何使用 qiankun 实现微前端架构的指
 author: "DescartesZ"
 pubDate: 2025-11-07
 tags:
-  ["qiankun", "Vue", "微前端"]
+  ["qiankun", "Vue", "微前端","长文"]
 ---
 
 当新项目中存在老技术栈或跨技术栈（如Vue与React）项目，且需要进行整合或新功能开发时，微前端将是选型中的一个重要方案，其中iframe或许会成为第一个想到的解决方案，但iframe存在一些比较影响体验的问题，比如每次进入子应用时需重新加载资源、UI 不同步，DOM 结构不共享。

@@ -1,9 +1,9 @@
 ---
-title: "Uniapp中使用webview并与原页面通信"
-description: "这是一个关于如何在 Uniapp 中使用 webview 并与原页面通信的指南。"
+title: "uniapp中使用webview并与原页面通信"
+description: "这是一个关于如何在 uniapp 中使用 webview 并与原页面通信的指南。"
 author: "DescartesZ"
 pubDate: 2025-03-17
-tags: ["webview","Uniapp"]
+tags: ["webview","uniapp"]
 ---
 
 ## 1.接收数据

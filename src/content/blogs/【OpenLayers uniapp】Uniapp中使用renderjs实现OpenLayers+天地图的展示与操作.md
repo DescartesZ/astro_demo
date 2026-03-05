@@ -4,7 +4,7 @@ description: "这是一个关于如何使用 OpenLayers 在移动端实现天地
 author: "DescartesZ"
 pubDate: 2025-09-10
 tags:
-  ["OpenLayers", "Uniapp",  "地图"]
+  ["OpenLayers", "Uniapp",  "地图","长文"]
 ---
 Uniapp中自带的地图组件对支持的地图服务略有局限，同时，该组件在样式布局上层级过高且无法控制，无法满足部分高度自定义化的需求。故引入renderjs视图层工具搭配OpenLayers框架对地图功能进行实现，但由于renderjs的限制，只支持App端与H5端。
 ## 一、renderjs
