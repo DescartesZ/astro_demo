@@ -132,10 +132,99 @@ tags:
 |**`box-sizing`设置**|`content-box`：默认值，border 和 padding 不算到 width 范围内，可以理解为是 W3c 的标准模型(default)。总宽=width+padding+border+margin|`border-box`：border 和 padding 划归到 width 范围内，可以理解为是 IE 的怪异盒模型，总宽=width+margin|
 
 ### 2.2. 选择器类型、优先级计算规则
+以下按优先级排序
+1.  `.class`内使用 `!important` 为最高
+2. 内联样式 `style=""`
+3. id选择器 `#header`
+4. 伪类选择器 `:hover`
+5. 属性选择器 `[type="text"]` `[href]`
+6. 类选择器 `.class`
+7. 伪元素选择器 `::before` `::after` `::first-line`
+8. 元素选择器 `div` `p`
+
+!important > 内联样式 > ID > 类/伪类/属性 > 元素/伪元素 > 继承 > 默认样式
+
+**ID 的权重永远高于类**：无论有多少个类，都比不过一个 ID。
+
 ### 2.3. 浮动布局原理、优缺点与清除浮动方案
+- float 属性最初设计用于实现文字环绕图片的效果，后来被广泛应用于网页布局。其核心原理是：
+
+    - 设置 float: left/right 的元素会脱离标准文档流，但未完全脱离文本流（文字会环绕浮动元素）。
+    - 浮动元素会向左或向右移动，直到其边缘碰到包含块（父元素）的边缘或另一个浮动元素的边缘。
+    - 浮动元素不再占据父元素的高度，导致父元素高度塌陷（即父元素无法被浮动子元素撑开）。
+    - 如果一行无法容纳多个浮动元素，后续浮动元素会自动换行。
+
+- 优点：
+    - 文字环绕效果：实现图文混排（如文章配图）非常自然
+    - 块级元素并排：使块级元素能够水平排列，打破了块级元素独占一行的限制
+    - 简单灵活：通过控制浮动方向和宽度，可快速搭建多列布局
+
+- 缺点：
+    - 高度塌陷:脱离文档流，父级元素高度将塌陷
+    - 布局错乱：若浮动元素宽度总和超过父容器，会导致换行错位
+
+- 清除浮动：
+    - 元素内新增额外的标签`<div style="clear:both"></div>`
+    - (触发BFC)父级添加`overflow`属性，`overflow:hidden` `overflow:auto`均可
+    - 父级元素设置高度
+    - 使用伪类选择器 `:after`
+        ```css
+            .parent:after{
+                content:'';
+                display:block;
+                height:0;
+                visibility:hidden;
+                clear:both
+            }
+        ```
+
 ### 2.4. BFC（块级格式化上下文）触发条件、渲染规则与应用场景
+- BFC
+    - Web 页面 CSS 视觉渲染的一部分，它决定了块级盒子的布局及浮动元素如何交互
+    - 一个**独立的渲染区域**
+    - **内部元素的布局不会影响外部的元素**
+
+- 触发条件
+    - 根元素 `<html>`
+    - 浮动元素 **`float`** 不为 none（left / right）。
+    - 绝对定位元素 `position 为 absolute 或 fixed`
+    - display 值为以下之一：
+        - inline-block
+        - table-cell（表格单元格）
+        - table-caption（表格标题）
+        - flex / inline-flex（弹性布局）
+        - grid / inline-grid（网格布局）
+        - **flow-root**（专门创建无副作用的 BFC）
+    - **overflow 不为 visible：hidden / auto / scroll**。
+    - contain 值为 layout、content 或 paint。
+    - 多列容器：column-count 或 column-width 不为 auto（需注意浏览器兼容性）。
+
+- 渲染规则
+    - 内部块级盒子垂直排列
+    - 垂直方向的边缘重叠
+    - 不与浮动元素的box重叠
+    - BFC 是一个独立的容器，外面的元素不会影响里面的元素
+    - 计算BFC高度时，浮动元素与会参与计算（即 BFC 可以清除内部浮动，解决高度塌陷）。
+
+- 应用场景
+ - **清除内部浮动**（解决父元素高度塌陷）
+    ```css
+    .parent {
+        overflow: hidden;  /* 触发 BFC */
+    }
+    /* 或使用更语义化的方式 */
+    .parent {
+        display: flow-root;
+    }
+    ```
+ - **避免垂直外边距折叠**
+ - **实现自适应**两列布局（防止文字环绕浮动元素）
+ - 防止元素被浮动元素覆盖
+
+
 ### 2.5. 元素水平 / 垂直居中全方案
 ### 2.6. 经典布局实现：两栏自适应、圣杯布局、双飞翼布局、品字布局
+布局问题：div垂直居中，左右10px，高度始终为宽度一半
 ### 2.7. 伪类与伪元素的核心区别与应用
 ### 2.8. CSS3 动画（transition/animation）与硬件加速
 ### 2.9. 重绘与回流的触发条件、区别与优化方案
