@@ -18,7 +18,11 @@ const tags = getAllTags(posts).sort((tagA, tagB) => {
 });
 ---
 
-<MainLayout activePage="tags" pageTitle={siteConfig.title + ' | ' + '标签索引'}>
+<MainLayout
+  activePage="tags"
+  pageTitle={siteConfig.title + ' | 标签索引'}
+  pageDescription={'浏览所有技术标签：' + tags.map(t => t.name).join('、')}
+>
   <div class="page-content">
     <h1 class="sigmar-ff text-balance">标签</h1>
     <p class="kanit-regular">选择一个标签以查看相关文章</p>

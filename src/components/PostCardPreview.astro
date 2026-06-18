@@ -16,7 +16,8 @@ const { title, pubDate, description, image, tags } = post.data;
         <Image
           class="img-card w-full sm:w-80 h-48 sm:h-44 object-cover rounded-lg flex-shrink-0"
           src={image.url}
-          alt={image.alt || ''}
+          alt={image.alt || title}
+          loading="lazy"
         />
       ) : (
         <div class="tag-card border border-space-blue dark:border-space-yellow img-card w-full sm:w-80 h-48 sm:h-44 flex items-center justify-center flex-shrink-0 rounded-lg overflow-hidden">

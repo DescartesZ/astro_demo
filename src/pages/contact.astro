@@ -5,13 +5,17 @@ import siteConfig from '../site.config';
 import coverImage from '../assets/images/astronaut-4.png';
 ---
 
-<MainLayout activePage="contact" pageTitle={siteConfig.title + ' | Contact'}>
+<MainLayout
+  activePage="contact"
+  pageTitle={siteConfig.title + ' | 联系'}
+  pageDescription={siteConfig.contactInfo?.text?.substring(0, 160) || '联系我 - ' + siteConfig.title}
+>
   <div class="page-content">
     <h1 class="sigmar-ff text-balance">{siteConfig.contactInfo?.title}</h1>
     <Image
       width={400}
       height={300}
-      loading="eager"
+      loading="lazy"
       layout="fixed"
       class="rounded-4xl mb-8 mx-auto grayscale-75 saturate-200"
       src={coverImage}

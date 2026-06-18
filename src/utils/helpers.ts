@@ -33,6 +33,54 @@ export function createSlugFromTitle(title: string): string {
   return strToHex(slug);
 }
 
+/**
+ * 从中文标题中提取英文关键词，生成语义化 slug
+ * 例如: "【Vue3】Vue3使用Axios请求二次封装" → "vue3-axios"
+ * 例如: "【Android】Android权限清单" → "android"
+ * 如果无法提取足够的关键词，则回退到哈希值
+ *
+ * @param title - 文章标题
+ * @param fallbackSuffix - 当提取的关键词不足时使用的备选后缀（如文件名）
+ * @returns 语义化 slug 字符串
+ */
+export function generateSemanticSlug(
+  title: string,
+  fallbackSuffix?: string,
+): string {
+  // 1. 提取所有连续的拉丁字母和数字（忽略大小写差异后去重）
+  const latinMatches = title.match(/[a-zA-Z0-9]+/g) || [];
+  const uniqueWords = [
+    ...new Set(latinMatches.map((w) => w.toLowerCase())),
+  ];
+
+  // 2. 过滤掉过短或无意义的词（如单个数字）
+  const meaningfulWords = uniqueWords.filter((w) => w.length >= 2 || /^[a-zA-Z]/.test(w));
+
+  let slug = meaningfulWords.join("-");
+
+  // 3. 如果标题中提取的词不足，尝试从文件名/备选后缀中提取
+  if (slug.length < 3 && fallbackSuffix) {
+    const fallbackMatches = fallbackSuffix.match(/[a-zA-Z0-9]+/g) || [];
+    const fallbackWords = [
+      ...new Set(fallbackMatches.map((w) => w.toLowerCase())),
+    ].filter((w) => w.length >= 2);
+    slug = fallbackWords.join("-");
+  }
+
+  // 4. 最后回退到哈希值
+  if (slug.length < 2) {
+    slug = "post-" + createSlugFromTitle(title);
+  }
+
+  // 5. 清理：去除首尾连字符，限制长度
+  slug = slug.replace(/^-+|-+$/g, "").replace(/-+/g, "-");
+  if (slug.length > 80) {
+    slug = slug.substring(0, 80).replace(/-+$/g, "");
+  }
+
+  return slug;
+}
+
 export function getAllTags(posts: CollectionEntry<"blogs">[]) {
   const tags: string[] = [
     ...new Set(posts.flatMap((post) => post.data.tags || []).filter(Boolean)),
@@ -90,31 +138,50 @@ export function sortItemsByDateDesc(
 }
 
 /**
- * 为博客文章生成基于标题的数字ID
- * 替换原有的文件名ID，使URL更加美观
+ * 为博客文章生成语义化 slug ID
+ * 从中文标题中提取英文关键词，生成可读的 URL slug
  *
  * @param post - 博客文章集合项
- * @returns 返回包含新ID的文章对象
+ * @returns 返回包含语义化 slug ID 的文章对象
  */
 export function generatePostId(
   post: CollectionEntry<"blogs">,
 ): CollectionEntry<"blogs"> {
-  // 增加blog标识，防止与其他集合冲突
-  const titleBasedId = createSlugFromTitle("Blog" + post.data.title);
+  // 提取文件名 stem 作为备选关键词来源
+  const fileStem = post.id.replace(/\.[^.]+$/, "");
+  const slug = generateSemanticSlug(post.data.title, fileStem);
   return {
     ...post,
-    id: titleBasedId.toString(),
+    id: slug,
   };
 }
 
 /**
- * 获取所有博客文章并生成基于标题的数字ID
+ * 获取所有博客文章并生成语义化 slug ID
+ * 自动处理重复 slug：如果两篇文章生成相同 slug，后续文章会添加数字后缀
  *
- * @returns 返回包含数字ID的博客文章数组
+ * @returns 返回包含语义化 slug ID 的博客文章数组
  */
 export async function getCollectionWithNumericIds(): Promise<
   CollectionEntry<"blogs">[]
 > {
   const posts = await getCollection("blogs");
-  return posts.map(generatePostId);
+  const slugCount = new Map<string, number>();
+  const result: CollectionEntry<"blogs">[] = [];
+
+  for (const post of posts) {
+    const fileStem = post.id.replace(/\.[^.]+$/, "");
+    let slug = generateSemanticSlug(post.data.title, fileStem);
+
+    // 处理重复 slug：如果已存在相同 slug，添加数字后缀
+    const count = slugCount.get(slug) || 0;
+    if (count > 0) {
+      slug = `${slug}-${count + 1}`;
+    }
+    slugCount.set(slug, count + 1);
+
+    result.push({ ...post, id: slug });
+  }
+
+  return result;
 }

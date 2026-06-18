@@ -3,7 +3,9 @@ import '../../styles/global.css';
 import { Image } from 'astro:assets';
 import { sortItemsByDateDesc, createSlugFromTitle, withBase, getCollectionWithNumericIds } from '../../utils/helpers';
 import { type CollectionEntry, render } from 'astro:content';
+import { generateArticleSchema, generateBreadcrumbSchema } from '../../utils/structuredData';
 import Button from '../../components/Button.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import MainLayout from '../../layouts/MainLayout.astro';
 import ArrowLeft from '../../icons/ArrowLeft.astro';
 import ArrowRight from '../../icons/ArrowRight.astro';
@@ -29,19 +31,58 @@ type Props = {
 };
 
 const { post, prevPost, nextPost } = Astro.props;
-const { title, pubDate, author, tags = [], image } = post.data;
+const { title, pubDate, author, tags = [], image, description } = post.data;
 const { Content } = await render(post);
+
+// 构建当前文章 URL
+const articleUrl = new URL(withBase(`/blog/${post.id}`), Astro.site).href;
+
+// 结构化数据
+const articleSchema = generateArticleSchema({
+  title,
+  description,
+  url: articleUrl,
+  image: image?.url?.src || image?.url?.toString(),
+  publishedDate: pubDate,
+  authorName: author,
+  tags,
+});
+
+const breadcrumbSchema = generateBreadcrumbSchema([
+  { name: '首页', url: new URL('/', Astro.site).href },
+  { name: '博客', url: new URL('/blog', Astro.site).href },
+  { name: title, url: articleUrl },
+]);
 ---
 
-<MainLayout pageTitle={siteConfig.title + ' | ' + title}>
+<MainLayout
+  pageTitle={title + ' | ' + siteConfig.title}
+  activePage="blog"
+  pageDescription={description}
+  pageImage={image?.url?.src || image?.url?.toString()}
+  pageCanonicalURL={articleUrl}
+  pageType="article"
+  pageAuthor={author}
+  pagePublishedDate={pubDate}
+  pageTags={tags}
+>
   <div class="page-content">
+    <!-- 面包屑导航 -->
+    <Breadcrumbs
+      items={[
+        { name: '首页', href: withBase('/') },
+        { name: '博客', href: withBase('/blog') },
+        { name: title, href: withBase(`/blog/${post.id}`) },
+      ]}
+    />
+
     <h1 class="sigmar-ff text-center text-balance">{title}</h1>
     <p class="leading-8 text-center kanit-regular text-balance text-xs">
-      by 🧑‍🚀 <span class="kanit-bold">{author}</span> on <span class="kanit-bold">
-        {new Date(pubDate).toLocaleDateString()}
+      by 🧑‍🚀 <span class="kanit-bold">{author || 'DescartesZ'}</span> on <span class="kanit-bold">
+        {new Date(pubDate).toLocaleDateString('zh-CN')}
       </span>
     </p>
-    {image && image.url && <Image class="mb-8 my-6" src={image?.url} alt={image?.alt || ''} />}
+    {image && image.url && <Image class="mb-8 my-6" src={image?.url} alt={image?.alt || title} />}
     <div class="font-light text-left">
       <Content />
     </div>
@@ -68,4 +109,8 @@ const { Content } = await render(post);
       }
     </div>
   </div>
+
+  <!-- JSON-LD 结构化数据 -->
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)}></script>
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>
 </MainLayout>

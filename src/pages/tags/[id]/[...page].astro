@@ -31,11 +31,15 @@ const allTags = getAllTags(allPosts);
 const currentTag = allTags.find((tag) => {
   return Number(tag.id) === Number(params.id);
 });
+const tagName = currentTag?.name || '未知';
 ---
 
-<MainLayout pageTitle={siteConfig.title + '| ' + currentTag?.name + ' 文章'}>
+<MainLayout
+  pageTitle={siteConfig.title + ' | ' + tagName + ' 文章'}
+  pageDescription={`查看标签为「${tagName}」的所有博客文章 - ${siteConfig.title}`}
+>
   <div class="page-content">
-    <h2>关于标签 <span class="sigmar-ff">“{currentTag?.name || '未知'}”</span>的文章</h2>
+    <h2>关于标签 <span class="sigmar-ff">"{tagName}"</span>的文章</h2>
     <div class="flex flex-col gap-8 max-w-full text-left mt-3">
       {blog.map((post) => <PostListPreview post={post} />)}
     </div>

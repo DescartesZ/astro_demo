@@ -2,16 +2,21 @@
 import { Image } from 'astro:assets';
 import MainLayout from '../layouts/MainLayout.astro';
 import siteConfig from '../site.config';
+import { generatePersonSchema } from '../utils/structuredData';
 import coverImage from '../assets/images/astronaut-5.png';
 ---
 
-<MainLayout activePage="about" pageTitle={siteConfig.title + ' | About'}>
+<MainLayout
+  activePage="about"
+  pageTitle={siteConfig.title + ' | 关于'}
+  pageDescription={siteConfig.about?.text?.substring(0, 160) || siteConfig.description}
+>
   <div class="page-content">
     <h1 class="sigmar-ff text-balance">{siteConfig.about?.title}</h1>
     <Image
       width={400}
       height={300}
-      loading="eager"
+      loading="lazy"
       layout="constrained"
       class="rounded-4xl mb-8 mx-auto"
       src={coverImage}
@@ -21,4 +26,6 @@ import coverImage from '../assets/images/astronaut-5.png';
       {siteConfig.about?.text}
     </p>
   </div>
+
+  <script type="application/ld+json" set:html={JSON.stringify(generatePersonSchema())}></script>
 </MainLayout>

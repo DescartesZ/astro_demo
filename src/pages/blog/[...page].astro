@@ -18,9 +18,15 @@ type Props = { page: Page<CollectionEntry<'totalPosts'>> };
 
 const { page } = Astro.props;
 const allPosts = page.data;
+
+const blogDescription = siteConfig.blog?.description || siteConfig.description;
 ---
 
-<MainLayout activePage="blog" pageTitle={siteConfig.title + ' | 我的博客'}>
+<MainLayout
+  activePage="blog"
+  pageTitle={siteConfig.title + ' | 我的博客'}
+  pageDescription={blogDescription}
+>
   <div class="page-content py-8 text-center">
     <h1 class="sigmar-ff text-3xl sm:text-4xl lg:text-6xl">我的博客</h1>
     {

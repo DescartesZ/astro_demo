@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import MainLayout from '../layouts/MainLayout.astro';
 import siteConfig from '../site.config';
+import { generateWebSiteSchema, generateBlogSchema } from '../utils/structuredData';
 import { sortItemsByDateDesc, withBase, getCollectionWithNumericIds } from '../utils/helpers';
 import PostCardPreview from '../components/PostCardPreview.astro';
 import Button from '../components/Button.astro';
@@ -10,9 +11,18 @@ import heroImage from '../assets/images/pixeltrue-space-discovery.svg';
 import ArrowRight from '../icons/ArrowRight.astro';
 
 const allPosts = (await getCollectionWithNumericIds()).sort(sortItemsByDateDesc);
+
+// 结构化数据
+const webSiteSchema = generateWebSiteSchema();
+const blogSchema = generateBlogSchema(allPosts.length);
 ---
 
-<MainLayout activePage="home" pageTitle={siteConfig.title + ' | 无垠空间'}>
+<MainLayout
+  activePage="home"
+  pageTitle={siteConfig.title + ' | 无垠空间'}
+  pageDescription={siteConfig.description}
+  pageImage={siteConfig.image?.src}
+>
   <div
     class="jumbo-banner flex flex-col lg:flex-row lg:items-center lg:justify-between w-full px-4 my-8 sm:my-12 gap-6"
   >
@@ -61,4 +71,8 @@ const allPosts = (await getCollectionWithNumericIds()).sort(sortItemsByDateDesc)
       </Button>
     </div>
   </div>
+
+  <!-- JSON-LD 结构化数据 -->
+  <script type="application/ld+json" set:html={JSON.stringify(webSiteSchema)}></script>
+  <script type="application/ld+json" set:html={JSON.stringify(blogSchema)}></script>
 </MainLayout>

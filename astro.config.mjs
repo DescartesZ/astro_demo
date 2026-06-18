@@ -37,11 +37,33 @@ export default defineConfig({
 
       // 序列化选项 - 自定义输出格式
       serialize: (item) => {
+        // 根据页面路径设置不同的优先级
+        let priority = 0.5;
+        // item.url 是完整的绝对 URL，需要解析 pathname
+        const urlObj = new URL(item.url);
+        const path = urlObj.pathname.replace(/\/+$/, '') || '/';
+
+        if (path === '/' || path === '/index') {
+          priority = 1.0;            // 首页最高优先级
+        } else if (path.startsWith('/blog/') && path !== '/blog') {
+          priority = 0.7;            // 博客文章页
+        } else if (path === '/blog') {
+          priority = 0.9;            // 博客列表页
+        } else if (path.startsWith('/tags/') && path !== '/tags') {
+          priority = 0.5;            // 标签筛选页
+        } else if (path === '/tags') {
+          priority = 0.6;            // 标签索引页
+        } else if (path === '/about') {
+          priority = 0.4;            // 关于页
+        } else if (path === '/contact') {
+          priority = 0.4;            // 联系页
+        }
+
         return {
           url: item.url,
           lastmod: item.lastmod,
           changefreq: item.changefreq || 'weekly',
-          priority: item.priority || 0.5,
+          priority: priority,
         };
       },
 

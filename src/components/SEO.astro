@@ -1,0 +1,83 @@
+---
+import siteConfig from '../site.config';
+
+interface SEOProps {
+  title: string;
+  description: string;
+  image?: string;
+  canonicalURL?: string | URL;
+  type?: 'website' | 'article';
+  author?: string;
+  publishedDate?: Date;
+  modifiedDate?: Date;
+  tags?: string[];
+  noindex?: boolean;
+  locale?: string;
+}
+
+const {
+  title,
+  description,
+  image = siteConfig.image?.src || '/space-ahead-preview.jpeg',
+  canonicalURL,
+  type = 'website',
+  author,
+  publishedDate,
+  modifiedDate,
+  tags = [],
+  noindex = false,
+  locale = 'zh_CN',
+} = Astro.props as SEOProps;
+
+// 确保 canonical URL 是完整的绝对 URL
+const resolvedCanonical = canonicalURL
+  ? new URL(canonicalURL.toString(), Astro.site).href
+  : new URL(Astro.url.pathname, Astro.site).href;
+
+// OG 图片也必须是绝对 URL
+const ogImage = image.startsWith('http')
+  ? image
+  : new URL(image, Astro.site).href;
+
+const siteName = '无垠空间';
+const twitterHandle = ''; // 如有 Twitter 账号可填写
+---
+
+<!-- 基础 Meta -->
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="author" content={author || 'DescartesZ'} />
+{
+  tags.length > 0 && (
+    <meta name="keywords" content={tags.join(', ')} />
+  )
+}
+{noindex && <meta name="robots" content="noindex, follow" />}
+<link rel="canonical" href={resolvedCanonical} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={type} />
+<meta property="og:url" content={resolvedCanonical} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:site_name" content={siteName} />
+<meta property="og:locale" content={locale} />
+{publishedDate && type === 'article' && (
+  <meta property="article:published_time" content={publishedDate.toISOString()} />
+)}
+{modifiedDate && type === 'article' && (
+  <meta property="article:modified_time" content={modifiedDate.toISOString()} />
+)}
+{type === 'article' && tags.map(tag => (
+  <meta property="article:tag" content={tag} />
+))}
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+{twitterHandle && <meta name="twitter:site" content={twitterHandle} />}
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
