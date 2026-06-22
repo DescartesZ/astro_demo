@@ -67,8 +67,8 @@ export default defineConfig({
         };
       },
 
-      // 站点地图样式表
-      // xsl: '/sitemap-style.xsl',
+      // 站点地图样式表（浏览器打开 XML 时使用 XSL 渲染为可读表格）
+      xslURL: '/sitemap-style.xsl',
 
       // 启用地域化支持（如果需要）
       // i18n: {
